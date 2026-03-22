@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <!--Head is the information about the page (but this is not visible to user)-->
+    <head>
+        <title>Polyglot Search Engine</title>
+        <!-- This is the name that it would show in the browser tab -->
+
+        <style>
+            /*This part is in CSS (to make the webpage look better)*/
+            body {
+                font-family: Arial; /* this is the chosen font */
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            input {
+                padding: 10px; /*makes input box bigger*/
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 20px; /*makes button bigger*/
+                font-size: 16px;
+                margin-left: 10px;
+            }
+
+            /* P stands for paragraph from html - found in body */
+            p {
+                margin-top: 20px;
+                font-size: 18px;
+            }
+        </style>
+    </head>
+
+    <!--Body is everything the user is able to see-->
+    <body>
+    
+    <h1>Polyglot Search Engine</h1>
+
+    <input id="word" placeholder="Enter word">
+
+    <button onclick="search()">Search</button>
+    <!--This is the button that runs the search() when clicked-->
+
+    <p id="result"></p>
+    <!--Display of result-->
+    <!--P stands for paragraph-->
+
+    <script>
+    /*JavaScript starts here. better for interactivity and functionality of the webpage.*/
+    function search() {
+        //to get the text the user has typed
+        const word = document.getElementById("word").value;
+        //to display the result
+        document.getElementById("result").innerText = "You searched for: " + word;
+    }
+    </script>
+    </body>
+</html>
