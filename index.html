@@ -42,9 +42,9 @@
     <button onclick="search()">Search</button>
     <!--This is the button that runs the search() when clicked-->
 
-    <p id="result"></p>
+    <div id="result"></div>
     <!--Display of result-->
-    <!--P stands for paragraph-->
+    <!--div holds anything while p is limited-->
 
     <script>
     /*JavaScript starts here. better for interactivity and functionality of the webpage.*/
@@ -53,6 +53,30 @@
         const word = document.getElementById("word").value;
         //to display the result
         document.getElementById("result").innerText = "You searched for: " + word;
+    
+        //fake result (will come from backend later)
+        const trieResult = "hello";
+        const hashResult = "hello";
+
+        //fake timing values (will come from backend later)
+        const trieTime = "120 ns";
+        const hashTime = "80 ns";
+
+        //to get the element with id="result" 
+        document.getElementById("result").innerHTML =
+            "<hr>" + //this adds a horizontal line
+            //Show the word the person typed 
+            "<p><strong>Word:</strong> " + word + "</p>" +
+            //Show Trie result 
+            "<p><strong>Trie Result:</strong> " + trieResult + "</p>" +
+            //Show Trie Time
+            "<p><strong>Trie Time:</strong> " + trieTime + "</p>" +
+            //Show Hash result
+            "<p><strong>Hash Result:</strong> " + hashResult + "</p>" +
+            //Show Hash Time
+            "<p><strong>Hash Time:</strong> " + hashTime + "</p>";
+            //to add another line at the bottom
+            "<hr>";
     }
     </script>
     </body>
