@@ -7,7 +7,9 @@ using namespace std;
 
 struct entry {
     string english;
-    string spanish;
+    vector<string> spanish;
 };
 
 vector<entry> parseFile(const string& filename);
+
+vector<entry> loadDataset(const string& filename);
