@@ -1,5 +1,5 @@
-// Saved file
 #include "trie.h"
+#include <cctype>
 
 // Base Initialization
 TrieNode::TrieNode(){
@@ -16,64 +16,71 @@ Trie::Trie(){
     root = new TrieNode();
 }
 
+// Convert String to LowerCase
+string lower_case(const string& input){
+    string result = input;
+
+    for (int i = 0; i < result.length(); i++){
+        result[i] = tolower((unsigned char)result[i]);
+    }
+    return result;
+}
+
 //Insert
 void Trie::insert(const string& english, const string& spanish){
+    // LowerCase conversion
+    string eng = lower_case(english);
+    string spa = lower_case(spanish);
+
     TrieNode* current = root;
     // Input is English
-    for (int i = 0; i < english.length(); i ++){
-        int index = (int)english[i];
+    for (int i = 0; i < eng.length(); i ++){
+        //Not int because int can be negative
+        int index = (unsigned char)eng[i];
 
-        if (index < 0 || index >= 256){
-            continue;
-        }
         if (current->children[index] == nullptr){
             current->children[index] = new TrieNode();
         }
         current = current->children[index];
     }
     current->isWord = true;
-    current->english = english;
-    current->spanish = spanish;
+    current->english = eng;
+    current->spanish = spa;
 
     // Input is Spanish
     current = root;
-    for (int i = 0; i < spanish.length(); i++){
-        int index = (int)spanish[i];
+    for (int i = 0; i < spa.length(); i++){
+        int index = (unsigned char)spa[i];
 
-        if (index < 0 || index >= 256){
-            continue;
-        }
         if (current->children[index] == nullptr){
             current->children[index] = new TrieNode();
         }
         current = current->children[index];
     }
     current->isWord = true;
-    current->english = english;
-    current->spanish = spanish;
+    current->english = eng;
+    current->spanish = spa;
 }
 
 // Search
 bool Trie::search(const string& target, string& result){
+    string word = lower_case(target);
+
     TrieNode* current = root;
 
-    for( int i = 0; i < target.length(); i ++){
-        int index = (int)target[i];
+    for( int i = 0; i < word.length(); i ++){
+        int index = (unsigned char)word[i];
 
-        // Checks for invalid indexes/nullptr
-        if (index < 0 || index >= 256){
-            return false;
-        }
+        // Checks for nullptr
         if (current->children[index] == nullptr){
             return false;
         }
-
         current = current->children[index];
     }
 
     if (current->isWord){
         // If input is english output spanish
-        if (target == current->english){
+        if (word == current->english){
             result = current->spanish;
         }
         // But if input is spanish output english
