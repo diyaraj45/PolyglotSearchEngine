@@ -1,6 +1,7 @@
-// Saved file
+#pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 struct TrieNode{
@@ -8,7 +9,7 @@ struct TrieNode{
     bool isWord;
 
     string english;
-    string spanish;
+    vector<string> spanish; // Due to many translations of a single word in english (Ex: Vete, Vaya, ...)
 
     TrieNode();
 };
@@ -21,5 +22,5 @@ private:
     Trie();
 
     void insert(const string& english, const string& spanish);
-    bool search(const string& target, string& result);
+    bool search(const string& target, vector<string>& results);
 };
