@@ -1,3 +1,4 @@
+//Bug fix + Implementation
 #include "trie.h"
 #include <cctype>
 
