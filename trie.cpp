@@ -6,7 +6,7 @@
 TrieNode::TrieNode(){
     isWord = false;
     english = "";
-    spanish = "";
+    spanish.clear();
 
     for (int i = 0; i < 256; i ++){
         children[i] = nullptr;
@@ -46,7 +46,9 @@ void Trie::insert(const string& english, const string& spanish){
     }
     current->isWord = true;
     current->english = eng;
-    current->spanish = spa;
+    if (find(current->spanish.begin(), current->spanish.end(), spa) == current->spanish.end()){
+        current->spanish.push_back(spa);
+    }
 
     // Input is Spanish
     current = root;
@@ -60,11 +62,13 @@ void Trie::insert(const string& english, const string& spanish){
     }
     current->isWord = true;
     current->english = eng;
-    current->spanish = spa;
+    if (find(current->spanish.begin(), current->spanish.end(), eng) == current->spanish.end()){
+        current->spanish.push_back(eng);
+    }
 }
 
 // Search
-bool Trie::search(const string& target, string& result){
+bool Trie::search(const string& target, vector<string>& results){
     string word = lower_case(target);
 
     TrieNode* current = root;
@@ -82,11 +86,11 @@ bool Trie::search(const string& target, string& result){
     if (current->isWord){
         // If input is english output spanish
         if (word == current->english){
-            result = current->spanish;
+            results = current->spanish;
         }
         // But if input is spanish output english
         else{
-            result = current->english;
+            results = {current->english};
         }
         return true;
     }
