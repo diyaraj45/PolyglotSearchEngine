@@ -1,6 +1,7 @@
 //Bug fix + Implementation
 #include "trie.h"
 #include <cctype>
+#include <algorithm>
 
 // Base Initialization
 TrieNode::TrieNode(){
@@ -45,9 +46,9 @@ void Trie::insert(const string& english, const string& spanish){
         current = current->children[index];
     }
     current->isWord = true;
-    current->english = eng;
-    if (find(current->spanish.begin(), current->spanish.end(), spa) == current->spanish.end()){
-        current->spanish.push_back(spa);
+    current->english = english; // Store Original so that translation still has the first letter capitalized
+    if (find(current->spanish.begin(), current->spanish.end(), spanish) == current->spanish.end()){
+        current->spanish.push_back(spanish);
     }
 
     // Input is Spanish
@@ -61,9 +62,9 @@ void Trie::insert(const string& english, const string& spanish){
         current = current->children[index];
     }
     current->isWord = true;
-    current->english = eng;
-    if (find(current->spanish.begin(), current->spanish.end(), eng) == current->spanish.end()){
-        current->spanish.push_back(eng);
+    current->english = english;
+    if (find(current->spanish.begin(), current->spanish.end(), english) == current->spanish.end()){
+        current->spanish.push_back(english);
     }
 }
 
@@ -85,7 +86,7 @@ bool Trie::search(const string& target, vector<string>& results){
 
     if (current->isWord){
         // If input is english output spanish
-        if (word == current->english){
+        if (word == lower_case(current->english)){
             results = current->spanish;
         }
         // But if input is spanish output english
