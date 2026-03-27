@@ -7,7 +7,7 @@
 using namespace std;
 
 
-string parseField(stringstream& ss) {
+string parseFile(stringstream& ss) {
     string field;
     char c;
     ss.get(c);
@@ -30,7 +30,7 @@ string parseField(stringstream& ss) {
         while (ss.peek() != ',' && ss.peek() != EOF) {
             ss.get(c);
             field += c;
-        }
+        }  
         if (ss.peek() == ',') ss.get(c); 
     }
 
@@ -55,8 +55,8 @@ vector<entry> loadDataset(const string& filename) {
         stringstream ss(line);
         entry entry;
 
-        entry.english = parseField(ss);
-        entry.spanish = parseField(ss);
+        entry.english = parseFile(ss);
+        entry.spanish.push_back(parseFile(ss));
 
         if (!entry.english.empty() && !entry.spanish.empty()) {
             entries.push_back(entry);
@@ -67,14 +67,18 @@ vector<entry> loadDataset(const string& filename) {
     return entries;
 }
 
-//quick check to see if the parser works correctly (it does) - delete later!!!
-int main() {
-    vector<entry> dataset = loadDataset("data.csv");
+// //quick check to see if the parser works correctly (it does) - delete later!!!
+// int main() {
+//     vector<entry> dataset = loadDataset("data.csv");
 
-    for (int i = 0; i < 5 && i < dataset.size(); i++) {
-        cout << "EN: " << dataset[i].english
-                  << " | ES: " << dataset[i].spanish << endl;
-    }
+//     for (int i = 0; i < 5 && i < dataset.size(); i++) {
+//         cout << "EN: " << dataset[i].english << " | ES: ";
+//         for (int j = 0; j < dataset[i].spanish.size(); j++) {
+//         cout << dataset[i].spanish[j];
+//         if (j < dataset[i].spanish.size() - 1) cout << ", ";
+//         }
+//         cout << endl;
+//     }   
 
-    return 0;
-}
+//     return 0;
+// }
