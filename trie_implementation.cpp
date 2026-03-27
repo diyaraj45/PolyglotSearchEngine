@@ -25,25 +25,53 @@ long long TrieOperations::parser_trie(const vector<entry>& dataset){
 // Trie search: searches for the inserted word, if found is found in the dataset the translation is provided (+timer)
 TrieResult TrieOperations::search_word(const string& word){
     Timer timer;
-    timer.start();
 
     vector<string> results;
-    // word: input, result: reference for output
-    bool found = trie.search(word, results);
+    bool found = false;
+    long long time = 0;
+    int runs = 0;
+    timer.start();
 
-    long long time = timer.stop();
+    do {
+        results.clear(); // Clear results for each run
+        found = trie.search(word, results);
+        runs++;
+        time = timer.stop();
+    } while (time == 0); // Handle edge case of very fast searches
+    time = time / runs; // Average time per search
 
-    // Create Comma, Seperating strings for different spanish iterations of english word
+    //to join all spanish translations into one string with commas in between
     stringstream ss;
-    for (size_t i = 0; i < results.size(); i ++){
+    for (size_t i = 0; i < results.size(); i++){
         ss << results[i];
-        if (i < results.size() - 1) ss << ", ";
+        if (i < results.size() - 1) {
+            ss << ", ";
+        }
     }
-
-    // Establish outputs for word found, translation, and timer results then return
     TrieResult output;
     output.found = found; // true or false
     output.translate = ss.str(); // result contains the translated words
     output.time = time; // time it took to search and find
     return output;
-}
+}    
+
+//     vector<string> results;
+//     // word: input, result: reference for output
+//     bool found = trie.search(word, results);
+
+//     long long time = timer.stop();
+
+//     // Create Comma, Seperating strings for different spanish iterations of english word
+//     stringstream ss;
+//     for (size_t i = 0; i < results.size(); i ++){
+//         ss << results[i];
+//         if (i < results.size() - 1) ss << ", ";
+//     }
+
+//     // Establish outputs for word found, translation, and timer results then return
+//     TrieResult output;
+//     output.found = found; // true or false
+//     output.translate = ss.str(); // result contains the translated words
+//     output.time = time; // time it took to search and find
+//     return output;
+// }

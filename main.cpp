@@ -1,15 +1,33 @@
 #include <iostream> 
 #include <string>
 #include <vector>
+#include <cctype>
+#include <chrono>
 #include "parser.h"
 #include "hashtable.h"
 #include "trie_implementation.h"
 #include "timer.h"
 using namespace std;
 
+
+string normalizeWord(string word) {
+    string cleanWord = "";
+    for (int i = 0; i < word.size(); i++) {
+        char c = word[i];
+        if (isalnum(c)) {
+            cleanWord += tolower(c);
+        }
+    }
+    return cleanWord;
+}
+
 int main() {
     //load data from data.scv file
     vector<entry> dataset = loadDataset("data.csv");
+
+    for (int i = 0; i < dataset.size(); i++) {
+        dataset[i].english = normalizeWord(dataset[i].english);
+    }
 
     //build trie
     TrieOperations trieOps;
@@ -30,6 +48,7 @@ int main() {
     string word;
     cout << "Enter a word to search: ";
     cin >> word;
+    word = normalizeWord(word);
 
     //Trie Search
     TrieResult trieOutput = trieOps.search_word(word);
@@ -38,13 +57,22 @@ int main() {
     if (trieOutput.found) {
         trieResult = trieOutput.translate;
     }
+
     //Hash Search
+    string hashResult = "Word not found";
+    entry* hashEntry = nullptr;
+    long long hashTime = 0;
+    int hashRuns = 0;
+
     Timer hashSearchTimer;
     hashSearchTimer.start();
-    entry* hashEntry = hash.search(word);
-    long long hashTime = hashSearchTimer.stop();
-    string hashResult = "Word not found";
 
+    do {
+        hashEntry = hash.search(word);
+        hashRuns++;
+        hashTime = hashSearchTimer.stop();
+    } while (hashTime == 0); //keep searching until we get a valid time (handles edge case of very fast searches)
+    hashTime = hashTime / hashRuns; //average time per search
     //check if the hash table found the word
     if (hashEntry != nullptr) {
         entry& foundEntry = *hashEntry; //pointer into normal reference.
@@ -63,10 +91,8 @@ int main() {
     //Print results
     cout << "Word: " << word << endl;
     cout << "TrieResult: " << trieResult << endl;
-    cout << "TrieTime: " << trieTime << endl;
+    cout << "TrieTime: " << trieTime << " ns" << endl;
     cout << "HashResult: " << hashResult << endl;
-    cout << "HashTime: " << hashTime << endl;
-
-    return 0;
+    cout << "HashTime: " << hashTime << " ns" << endl;
 
 }
