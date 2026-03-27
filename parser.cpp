@@ -67,18 +67,18 @@ vector<entry> loadDataset(const string& filename) {
     return entries;
 }
 
-//quick check to see if the parser works correctly (it does) - delete later!!!
-int main() {
-    vector<entry> dataset = loadDataset("data.csv");
+// //quick check to see if the parser works correctly (it does) - delete later!!!
+// int main() {
+//     vector<entry> dataset = loadDataset("data.csv");
 
-    for (int i = 0; i < 5 && i < dataset.size(); i++) {
-        cout << "EN: " << dataset[i].english << " | ES: ";
-        for (int j = 0; j < dataset[i].spanish.size(); j++) {
-        cout << dataset[i].spanish[j];
-        if (j < dataset[i].spanish.size() - 1) cout << ", ";
-        }
-        cout << endl;
-    }   
+//     for (int i = 0; i < 5 && i < dataset.size(); i++) {
+//         cout << "EN: " << dataset[i].english << " | ES: ";
+//         for (int j = 0; j < dataset[i].spanish.size(); j++) {
+//         cout << dataset[i].spanish[j];
+//         if (j < dataset[i].spanish.size() - 1) cout << ", ";
+//         }
+//         cout << endl;
+//     }   
 
-    return 0;
-}
+//     return 0;
+// }

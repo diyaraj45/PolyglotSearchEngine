@@ -10,6 +10,6 @@ struct entry {
     vector<string> spanish;
 };
 
-vector<entry> parseFile(const string& filename);
+string parseFile(stringstream& ss);
 
 vector<entry> loadDataset(const string& filename);
