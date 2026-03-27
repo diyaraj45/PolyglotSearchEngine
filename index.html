@@ -30,12 +30,37 @@
                 margin-top: 20px;
                 font-size: 18px;
             }
+
+            .modeButton {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                border-radius: 6px;
+                border-color: red;
+                cursor: pointer;
+            }
+
+            .darkMode {
+                background-color: black;
+                color: white;
+            }
+            .darkMode input,
+            .darkMode button {
+                background-color: black;
+                color: white;
+                border: 1px solid #555;
+            }
+
+
+
         </style>
     </head>
 
     <!--Body is everything the user is able to see-->
     <body>
-
+    
+    <!--For dark or light mode-->
+    <button onclick = "lightDarkMode()" id="modeButton" class="modeButton">Dark Mode</button>
     <!--Logo-->
     <img src="images/logo.png" alt="Polyglot Search Engine Logo" width="400">
     
@@ -81,6 +106,18 @@
             "<p><strong>Hash Time:</strong> " + hashTime + "</p>";
             //to add another line at the bottom
             "<hr>";
+    }
+    function lightDarkMode() {
+        const body = document.body;
+        const button = document.getElementById("modeButton");
+        //Switch between light and dark mode
+        body.classList.toggle("darkMode");
+        //Change button text based on mode
+        if (body.classList.contains("darkMode")) {
+            button.innerText = "LightMode";
+        } else {
+            button.innerText = "DarkMode";
+        }
     }
     </script>
     </body>
