@@ -17,12 +17,18 @@
             input {
                 padding: 10px; /*makes input box bigger*/
                 font-size: 16px;
+                border-radius: 6px;
+                border-color: red;
+                cursor: text; /*makes cursor a text cursor when hovering over input box*/
             }
 
             button {
                 padding: 10px 20px; /*makes button bigger*/
                 font-size: 16px;
                 margin-left: 10px;
+                border-radius: 6px;
+                border-color: red;
+                cursor: pointer; /*makes cursor a pointer when hovering over button*/
             }
 
             /* P stands for paragraph from html - found in body */
@@ -55,6 +61,9 @@
                 padding: 10px;
                 font-size: 16px;
                 margin-bottom: 15px;
+                border-radius: 6px;
+                border-color: red;
+                cursor: pointer;
             }
 
         </style>
@@ -71,8 +80,8 @@
     <h1>Polyglot Search Engine</h1>
 
     <select id="direction">
-        <option value="english_to_spanish">GB -> ES English to Spanish</option>
-        <option value="spanish_to_english">ES -> GB Spanish to English</option>
+        <option value="english_to_spanish"> English to Spanish</option>
+        <option value="spanish_to_english"> Spanish to English</option>
     </select>
 
     <br><br>
@@ -91,14 +100,15 @@
     /*When user clicks the search button, this function will run*/
     async function search() {
         const word = document.getElementById("word").value;
-        /*send that word to the python bridge*/ 
+        const direction = document.getElementById("direction").value;
+        /*send that word and direction to the python bridge*/ 
         const response = await fetch("http://127.0.0.1:5000/search", {
             method: "POST", //we are sending data to the backend
             headers: {
                 "Content-Type": "application/json" // we are telling Flask we are sending JSON.
             },
             //convert JS object to JSON string to send to Flask
-            body: JSON.stringify({ word: word })
+            body: JSON.stringify({ word: word, direction: direction })
         });
         
         const data = await response.json(); //turn the response from Flask (which is JSON) into a JS object we can use
