@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <!--Head is the information about the page (but this is not visible to user)-->
+    <head>
+
+        <title>Polyglot Search Engine</title>
+        <!-- This is the name that it would show in the browser tab -->
+
+        <style>
+            /*This part is in CSS (to make the webpage look better)*/
+            body {
+                font-family: Arial; /* this is the chosen font */
+                text-align: center;
+                margin-top: 50px;
+            }
+
+            input {
+                padding: 10px; /*makes input box bigger*/
+                font-size: 16px;
+            }
+
+            button {
+                padding: 10px 20px; /*makes button bigger*/
+                font-size: 16px;
+                margin-left: 10px;
+            }
+
+            /* P stands for paragraph from html - found in body */
+            p {
+                margin-top: 20px;
+                font-size: 18px;
+            }
+
+            .modeButton {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                border-radius: 6px;
+                border-color: red;
+                cursor: pointer;
+            }
+
+            .darkMode {
+                background-color: black;
+                color: white;
+            }
+            .darkMode input,
+            .darkMode button {
+                background-color: black;
+                color: white;
+                border: 1px solid #555;
+            }
+
+            select {
+                padding: 10px;
+                font-size: 16px;
+                margin-bottom: 15px;
+            }
+
+        </style>
+    </head>
+
+    <!--Body is everything the user is able to see-->
+    <body>
+    
+    <!--For dark or light mode-->
+    <button onclick = "lightDarkMode()" id="modeButton" class="modeButton">Dark Mode</button>
+    <!--Logo-->
+    <img src="images/logo.png" alt="Polyglot Search Engine Logo" width="400">
+    
+    <h1>Polyglot Search Engine</h1>
+
+    <select id="direction">
+        <option value="english_to_spanish">GB -> ES English to Spanish</option>
+        <option value="spanish_to_english">ES -> GB Spanish to English</option>
+    </select>
+
+    <br><br>
+
+    <input id="word" placeholder="Enter word">
+
+    <button onclick="search()">Search</button>
+    <!--This is the button that runs the search() when clicked-->
+
+    <div id="result"></div>
+    <!--Display of result-->
+    <!--div holds anything while p is limited-->
+
+    <script>
+    /*JavaScript starts here. better for interactivity and functionality of the webpage.*/
+    /*When user clicks the search button, this function will run*/
+    async function search() {
+        const word = document.getElementById("word").value;
+        /*send that word to the python bridge*/ 
+        const response = await fetch("http://127.0.0.1:5000/search", {
+            method: "POST", //we are sending data to the backend
+            headers: {
+                "Content-Type": "application/json" // we are telling Flask we are sending JSON.
+            },
+            //convert JS object to JSON string to send to Flask
+            body: JSON.stringify({ word: word })
+        });
+        
+        const data = await response.json(); //turn the response from Flask (which is JSON) into a JS object we can use
+        console.log(data);
+
+        //to get the element with id="result" 
+        document.getElementById("result").innerHTML =
+            "<hr>" + //this adds a horizontal line
+            //Show the word the person typed 
+            "<p><strong>Word:</strong> " + data.word + "</p>" +
+            //Show Trie result 
+            "<p><strong>Trie Result:</strong> " + data.trieResult + "</p>" +
+            //Show Trie Time
+            "<p><strong>Trie Time:</strong> " + data.trieTime + "</p>" +
+            //Show Hash result
+            "<p><strong>Hash Result:</strong> " + data.hashResult + "</p>" +
+            //Show Hash Time
+            "<p><strong>Hash Time:</strong> " + data.hashTime + "</p>";
+            //to add another line at the bottom
+            "<hr>";
+    }
+    function lightDarkMode() {
+        const body = document.body;
+        const button = document.getElementById("modeButton");
+        //Switch between light and dark mode
+        body.classList.toggle("darkMode");
+        //Change button text based on mode
+        if (body.classList.contains("darkMode")) {
+            button.innerText = "LightMode";
+        } else {
+            button.innerText = "DarkMode";
+        }
+    }
+    </script>
+    </body>
+</html>

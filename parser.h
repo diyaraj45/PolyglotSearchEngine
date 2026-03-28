@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 using namespace std;
+#pragma once
 
 struct entry {
     string english;

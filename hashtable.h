@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "parser.h"
+#pragma once
 using namespace std;
 
 class hashTable {
