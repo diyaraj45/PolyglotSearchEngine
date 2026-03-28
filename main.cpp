@@ -10,24 +10,25 @@
 using namespace std;
 
 
-string normalizeWord(string word) {
-    string cleanWord = "";
-    for (int i = 0; i < word.size(); i++) {
-        char c = word[i];
-        if (isalnum(c)) {
-            cleanWord += tolower(c);
-        }
-    }
-    return cleanWord;
-}
+// string normalizeWord(string word) {
+//     string cleanWord = "";
+//     for (int i = 0; i < word.size(); i++) {
+//         char c = word[i];
+//         if (isalnum(c)) {
+//             cleanWord += tolower(c);
+//         }
+//     }
+//     return cleanWord;
+// }
 
 int main() {
     //load data from data.scv file
     vector<entry> dataset = loadDataset("data.csv");
 
-    for (int i = 0; i < dataset.size(); i++) {
-        dataset[i].english = normalizeWord(dataset[i].english);
-    }
+    // for (int i = 0; i < dataset.size(); i++) {
+    //     dataset[i].english = normalizeWord(dataset[i].english);
+    // }
+
 
     //build trie
     TrieOperations trieOps;
@@ -47,8 +48,7 @@ int main() {
     //user input
     string word;
     cout << "Enter a word to search: ";
-    cin >> word;
-    word = normalizeWord(word);
+    cin >> (cin, word);
 
     //Trie Search
     TrieResult trieOutput = trieOps.search_word(word);
