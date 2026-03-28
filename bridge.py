@@ -15,16 +15,46 @@ def search():
     data = request.get_json()
     word = data["word"] #extract the word to search for
 
-    #for now fake results
-    return jsonify({
+    # run the C++ program
+    import subprocess
+    result = subprocess.run(
+        ["program.exe"],
+        input=word + "\n",  # send the word as input to the C++ program
+        capture_output=True, #capture what the program prints
+        text=True #treat the output as text
+    )
+
+    #get all printed output from the C++ program
+    output = result.stdout.splitlines()
+
+    #default response if word not found
+    response_data = {
         "word": word,
-        "trieResult": "Fake Trie Result",
-        "trieTime": 123,
-        "hashResult": "Fake Hash Result",
-        "hashTime": 456
-    })
+        "trieResult": "Word not found",
+        "trieTime": "0 ns",
+        "hashResult": "Word not found",
+        "hashTime": "0 ns"
+    }
+
+    #read each printed line and extract values
+    for line in output:
+        if line.startswith("Word:"):
+            response_data["word"] = line.replace("Word:", "").strip()
+        elif line.startswith("TrieResult:"):
+            response_data["trieResult"] = line.replace("TrieResult:", "").strip()
+        elif line.startswith("TrieTime:"):
+            response_data["trieTime"] = line.replace("TrieTime:", "").strip()
+        elif line.startswith("HashResult:"):
+            response_data["hashResult"] = line.replace("HashResult:", "").strip()
+        elif line.startswith("HashTime:"):
+            response_data["hashTime"] = line.replace("HashTime:", "").strip()
+    #send the real results back to web
+    return jsonify(response_data)
 
 #This is what starts backend when run.
 
 if __name__ == "__main__":
     web.run(debug=True)
+
+
+
