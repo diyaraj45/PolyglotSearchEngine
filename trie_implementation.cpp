@@ -53,7 +53,7 @@ TrieResult TrieOperations::search_word(const string& word){
     output.translate = ss.str(); // result contains the translated words
     output.time = time; // time it took to search and find
     return output;
-}    
+}
 
 //     vector<string> results;
 //     // word: input, result: reference for output

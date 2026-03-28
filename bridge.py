@@ -14,12 +14,13 @@ def search():
     #get the JSON data sent from website
     data = request.get_json()
     word = data["word"] #extract the word to search for
+    direction = data["direction"] #extract the direction (english or spanish)
 
     # run the C++ program
-    import subprocess
+    import subprocess 
     result = subprocess.run(
         ["program.exe"],
-        input=word + "\n",  # send the word as input to the C++ program
+        input=word + "\n" + direction + "\n",  # send the word and direction as input to the C++ program
         capture_output=True, #capture what the program prints
         text=True #treat the output as text
     )

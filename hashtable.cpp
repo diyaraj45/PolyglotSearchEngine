@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <cstdlib>
 #include "parser.h"
 #include "hashtable.h"
 using namespace std;
@@ -15,10 +16,10 @@ hashTable::hashTable(int s) {
 
 int hashTable::hashFunction(const string& key, int tablesize) {
     int hashValue = 0;
-    for (char c : key) {
+    for (unsigned char c : key) {
         hashValue = (hashValue * 31 + c) % tablesize;
     }
-    return hashValue % tablesize;
+    return abs(hashValue % tablesize);
 }
 
 void hashTable::insert(const entry& e) {
