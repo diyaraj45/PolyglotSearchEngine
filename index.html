@@ -77,33 +77,35 @@
 
     <script>
     /*JavaScript starts here. better for interactivity and functionality of the webpage.*/
-    function search() {
-        //to get the text the user has typed
+    /*When user clicks the search button, this function will run*/
+    async function search() {
         const word = document.getElementById("word").value;
-        //to display the result
-        document.getElementById("result").innerText = "You searched for: " + word;
-    
-        //fake result (will come from backend later)
-        const trieResult = "hello";
-        const hashResult = "hello";
-
-        //fake timing values (will come from backend later)
-        const trieTime = "120 ns";
-        const hashTime = "80 ns";
+        /*send that word to the python bridge*/ 
+        const response = await fetch("http://127.0.0.1:5000/search", {
+            method: "POST", //we are sending data to the backend
+            headers: {
+                "Content-Type": "application/json" // we are telling Flask we are sending JSON.
+            },
+            //convert JS object to JSON string to send to Flask
+            body: JSON.stringify({ word: word })
+        });
+        
+        const data = await response.json(); //turn the response from Flask (which is JSON) into a JS object we can use
+        console.log(data);
 
         //to get the element with id="result" 
         document.getElementById("result").innerHTML =
             "<hr>" + //this adds a horizontal line
             //Show the word the person typed 
-            "<p><strong>Word:</strong> " + word + "</p>" +
+            "<p><strong>Word:</strong> " + data.word + "</p>" +
             //Show Trie result 
-            "<p><strong>Trie Result:</strong> " + trieResult + "</p>" +
+            "<p><strong>Trie Result:</strong> " + data.trieResult + "</p>" +
             //Show Trie Time
-            "<p><strong>Trie Time:</strong> " + trieTime + "</p>" +
+            "<p><strong>Trie Time:</strong> " + data.trieTime + "</p>" +
             //Show Hash result
-            "<p><strong>Hash Result:</strong> " + hashResult + "</p>" +
+            "<p><strong>Hash Result:</strong> " + data.hashResult + "</p>" +
             //Show Hash Time
-            "<p><strong>Hash Time:</strong> " + hashTime + "</p>";
+            "<p><strong>Hash Time:</strong> " + data.hashTime + "</p>";
             //to add another line at the bottom
             "<hr>";
     }
