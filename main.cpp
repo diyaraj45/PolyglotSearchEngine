@@ -100,25 +100,28 @@ int main() {
     //Hash Search
     string hashResult = "Word not found";
     entry* hashEntry = nullptr;
-    long long hashTime = 0;
-    //int hashRuns = 0;
-
-    Timer hashSearchTimer;
-    hashSearchTimer.start();
+    long long totalHashTime = 0;
+    int hashRuns = 0;
+    const long long minimumTotalTime = 1000000; // 1 millisecond in nanoseconds
 
     do {
+        Timer hashSearchTimer;
+        hashSearchTimer.start();
+
         if (direction == "english_to_spanish") {
             hashEntry = hash.search(word);
         } 
         else if (direction == "spanish_to_english") {
             hashEntry = hash.searchSpanish(word);
         }
+        totalHashTime += hashSearchTimer.stop();
+        hashRuns++;
 
-        hashTime = hashSearchTimer.stop();
-    } while (hashTime == 0); //keep searching until we get a valid time (handles edge case of very fast searches)
-    //hashTime = hashTime / hashRuns; //average time per search
+    } while (totalHashTime < minimumTotalTime); 
+    long long hashTime = totalHashTime / hashRuns; //average time per search
+
     //check if the hash table found the word
-    if (hashEntry != nullptr) {
+    if (hashEntry != nullptr) { 
         entry& foundEntry = *hashEntry; //pointer into normal reference.
         if (direction == "english_to_spanish") { //check if we are searching in the english_to_spanish direction
             if (!foundEntry.spanish.empty()) {
