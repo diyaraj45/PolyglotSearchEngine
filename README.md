@@ -1,6 +1,6 @@
 <H1> Polyglot Search Engine </h1>
-- A bilingual sarch engine that translates words between **English and Spanish** using two custom-built data structures: a **Trie** and a **Hash Table**.
-- This project was created for **COP3530 Project 2** to compare the performance of two data structures on a dataset of over 100,000 translation pairs.
+A bilingual sarch engine that translates words between **English and Spanish** using two custom-built data structures: a **Trie** and a **Hash Table**.
+This project was created for **COP3530 Project 2** to compare the performance of two data structures on a dataset of over 100,000 translation pairs.
 
 ---
 
@@ -49,9 +49,9 @@ Vocabulary learners frequently seek for tools that could help them effectively a
 
 ## Data Structures Used
 ### Trie
-The trie stores words character-by-character, making it efficient for structured word lookup.
+- The trie stores words character-by-character, making it efficient for structured word lookup.
 ### Hash Table
-The hash table stores words by hashing the input word into a bucket.
+- The hash table stores words by hashing the input word into a bucket.
 
 ---
 
