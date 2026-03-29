@@ -1,9 +1,9 @@
-<H1> Polyglot Search Engine </h1>
-A bilingual sarch engine that translates words between **English and Spanish** using two custom-built data structures: a **Trie** and a **Hash Table**.
-This project was created for **COP3530 Project 2** to compare the performance of two data structures on a dataset of over 100,000 translation pairs.
+#Polyglot Search Engine
+- A bilingual sarch engine that translates words between **English and Spanish** using two custom-built data structures: a **Trie** and a **Hash Table**.
+- This project was created for **COP3530 Project 2** to compare the performance of two data structures on a dataset of over 100,000 translation pairs.
 ---
 
-<h2> Table of Contents </h2>
+ ## Table of Contents
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Tools and Languages Used](#tools-and-languages-used)
@@ -17,7 +17,7 @@ This project was created for **COP3530 Project 2** to compare the performance of
 
 ## Project Overview
 ### Problem and Motivation
-Vocabulary learners frequently seek for tools that could help them effectively and efficiently search through vocabulary or unfamiliar alphabet through different languages. In general, searching through words in a vocabulary dataset contains more than 100,000 words causing structures that would typically run quickly to start slowing down. With this in mind, our project will analyze which data structure has the best performance when handling large datasets, in order to improve the speed of vocabulary word searches. Our goal is to create a search tool for multilingual vocabulary as well as analyze the performance difference in storing and retrieving words from a large vocabulary dataset using two different types of data structures, which are Trie and Hash Table.
+- Vocabulary learners frequently seek for tools that could help them effectively and efficiently search through vocabulary or unfamiliar alphabet through different languages. In general, searching through words in a vocabulary dataset contains more than 100,000 words causing structures that would typically run quickly to start slowing down. With this in mind, our project will analyze which data structure has the best performance when handling large datasets, in order to improve the speed of vocabulary word searches. Our goal is to create a search tool for multilingual vocabulary as well as analyze the performance difference in storing and retrieving words from a large vocabulary dataset using two different types of data structures, which are Trie and Hash Table.
 ---
 
 ## Features
