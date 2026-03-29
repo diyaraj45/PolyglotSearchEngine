@@ -1,5 +1,5 @@
 <H1> Polyglot Search Engine </h1>
-A bilingual sarch engine that translates words between English and Spanish using two custom-built data structures: a **Trie** and a Hash Table.
+A bilingual sarch engine that translates words between English and Spanish using two custom-built data structures: a Trie and a Hash Table.
 This project was created for COP3530 Project 2 to compare the performance of two data structures on a dataset of over 100,000 translation pairs.
 
 ---
